@@ -1,0 +1,25 @@
+name: Firebase CI/CD
+
+on:
+  push:
+    branches:
+      - main   # ou master selon ton repo
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Installer Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Déployer sur Firebase
+        run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }}
